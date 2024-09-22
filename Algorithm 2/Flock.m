@@ -1,4 +1,4 @@
-classdef Flock        
+        classdef Flock        
 
     properties
         Agents
@@ -48,7 +48,7 @@ classdef Flock
             end
         end
 
-        function dX = CollectiveODE(obj, ~, X, Radius)
+        function dX = CollectiveODE(obj, t, X, Radius, Traj)
             
             % Create Indices to Access Agents States
             TmpIdx = 0:(obj.Dim*2):numel(X);
@@ -97,7 +97,8 @@ classdef Flock
                 end
 
                 % U Gamma
-                UGamma = -obj.C1_gamma * Sigma1(ThisP) - obj.C2_gamma * (ThisQ);
+                [TrajP, TrajQ] = Traj(t); 
+                UGamma = -obj.C1_gamma * Sigma1(ThisP - TrajP) - obj.C2_gamma * (ThisQ - TrajQ);
                 
                 % Final U
                 U = UGamma + UAlpha;
@@ -107,9 +108,9 @@ classdef Flock
             end
         end
 
-        function Motion = Simulate(obj, SimTime)
+        function Motion = Simulate(obj, SimTime, TrajFunc)
             tSpan    = [0, SimTime];
-            ODEFun   = @(t, X) obj.CollectiveODE(t, X, obj.Radius);
+            ODEFun   = @(t, X) obj.CollectiveODE(t, X, obj.Radius, TrajFunc);
             InitCond = reshape([obj.Agents.States], [], 1);
 
             % [Motion.t, Motion.Y] = ode23(ODEFun, tSpan, InitCond);
