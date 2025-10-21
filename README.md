@@ -1,7 +1,6 @@
 # Flocking (Olfati-Saber + Boids)
 
-MATLAB implementation of flocking for multi-agent systems, including Olfati-Saber’s algorithms and Boids Flocking.
-Implements the Famous Olfati Algorithms and Classic Boids (via the external [MVector library](https://github.com/BanaanKiamanesh/MVector)).
+MATLAB implementation of flocking for multi-agent systems, including all of Olfati-Saber’s algorithms (1-3) and Boids Flocking.
 
 **Dependencies:**
 
